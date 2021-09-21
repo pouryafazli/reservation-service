@@ -1,0 +1,26 @@
+spring:
+  profiles:
+    active: "dev"
+
+---
+
+spring:
+  profiles: dev
+  datasource:
+    url: jdbc:h2:mem:testdb
+    username: sa
+    password:
+    driverClassName: org.h2.Driver
+  host: http://localhost:8080
+  port: 
+
+---
+
+spring:
+  profiles: prod
+  datasource:
+    url: jdbc:h2:file:~/dev/testdb
+    username: sa
+    password:
+    driverClassName: org.h2.Driver
+  host: http://localhost:8080
