@@ -12,7 +12,7 @@ spring:
     password:
     driverClassName: org.h2.Driver
   host: http://localhost:8080
-  port: 
+
 
 ---
 

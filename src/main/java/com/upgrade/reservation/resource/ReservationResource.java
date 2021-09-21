@@ -108,7 +108,6 @@ public class ReservationResource {
 		} catch (DateIsNotAvailableException e) {
 			log.debug("Requested dates are not available. [correlationId={}, startDate{}, enddate{}]",
 					RequestCorrelation.getId(), reservation.getStartDate(), reservation.getEndDate());
-
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Campsite is not available for rquested time", e);
 		} catch (Exception e) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Request cannot complete", e);

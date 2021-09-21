@@ -6,11 +6,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import javax.transaction.Transactional;
+//import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.upgrade.reservation.entity.ReservationDateEntity;
 import com.upgrade.reservation.entity.ReservationEntity;
@@ -27,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Setter
 @Slf4j
-@Transactional
+@Transactional(isolation = Isolation.SERIALIZABLE)
 public class ReservationServiceImpl implements ReservationService {
 
 	@Autowired

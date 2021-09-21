@@ -6,14 +6,14 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.5.4</version>
-		<relativePath /> <!-- lookup parent from repository -->
+		<version>2.4.0</version>
+		<relativePath />
 	</parent>
 	<groupId>com.upgrade</groupId>
 	<artifactId>reservation</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>reservation</name>
-	<description>Demo project for Spring Boot</description>
+
 	<properties>
 		<java.version>8</java.version>
 	</properties>
@@ -31,10 +31,6 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-actuator</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-ui</artifactId>
 			<version>1.5.10</version>
@@ -48,7 +44,6 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>1.18.20</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
