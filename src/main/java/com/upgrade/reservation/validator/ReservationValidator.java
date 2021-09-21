@@ -17,20 +17,22 @@ public class ReservationValidator implements ConstraintValidator<ValidateReserva
 	@Override
 	public boolean isValid(Reservation reservation, ConstraintValidatorContext context) {
 		boolean isValid = true;
-
-		if (reservation.getStartDate().isAfter(reservation.getEndDate())) {
+		LocalDate startDate = reservation.getStartDate();
+		LocalDate endDate = reservation.getEndDate();
+		
+		if (startDate.isAfter(endDate)) {
 			overrideDefaultErrorMessage("Reservation start date cannot be after the end date", context);
 			isValid = false;
 		}
 
-		long numOfDays = ChronoUnit.DAYS.between(reservation.getStartDate(), reservation.getEndDate());
+		long numOfDays = ChronoUnit.DAYS.between(startDate, endDate);
 		if (numOfDays > MAX_RESERVATION_PERIOD) {
 			overrideDefaultErrorMessage(
 					"Cannot reserve the campsite for more than " + MAX_RESERVATION_PERIOD + " days.", context);
 			isValid = false;
 		}
 
-		long reservationDateAheadOfArrival = ChronoUnit.DAYS.between(LocalDate.now(), reservation.getStartDate());
+		long reservationDateAheadOfArrival = ChronoUnit.DAYS.between(LocalDate.now(), startDate);
 		if (reservationDateAheadOfArrival < MIN_DAYS_AHEAD_ARRIVAL
 				|| reservationDateAheadOfArrival > MAX_DAYS_AHEAD_ARRIVAL) {
 			overrideDefaultErrorMessage(
