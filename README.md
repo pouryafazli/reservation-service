@@ -100,7 +100,7 @@ curl --location -g --request PUT 'http://localhost:8080/reservations/{id}' \
 curl --request DELETE 'http://localhost:8080/reservations/{id}'
 ```
 
-#Testing
+# Testing
 
 **Smoke Testing**
 
@@ -112,7 +112,7 @@ To verifies the entire system from end to end is working you can run the SmokeTe
 mvn test -Dtest=SmokeTests
 ```
 
-#Correlation ID
+# Correlation ID
 
 A unique identifier value will attached to any requests which doesn't have x-correlation-id header that allow reference to a particular request or all request logs.
 
