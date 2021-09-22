@@ -101,7 +101,9 @@ curl --request DELETE 'http://localhost:8080/reservations/{id}'
 ```
 
 #Testing
+
 **Smoke Testing**
+
 To verifies the entire system from end to end is working you can run the SmokeTests. It will execute:
 - All the APIs. It will get the available dates, reserve the campsite, get the reservation by its id, update the reservation and at the end delete the same reservation 
 - Running 200 concurrent API calls to reserve the campsite for the same period. To make sure all calls issue at the same time system used CountDownLatch and ExecutorService.
@@ -111,6 +113,7 @@ mvn test -Dtest=SmokeTests
 ```
 
 #Correlation ID
+
 A unique identifier value will attached to any requests which doesn't have x-correlation-id header that allow reference to a particular request or all request logs.
 
 ```
