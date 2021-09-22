@@ -20,8 +20,8 @@ public class ReservationValidator implements ConstraintValidator<ValidateReserva
 		LocalDate startDate = reservation.getStartDate();
 		LocalDate endDate = reservation.getEndDate();
 		
-		if (startDate.isAfter(endDate)) {
-			overrideDefaultErrorMessage("Reservation start date cannot be after the end date", context);
+		if (startDate.isEqual(endDate) || startDate.isAfter(endDate)) {
+			overrideDefaultErrorMessage("Reservation start date cannot be same day or after the end date", context);
 			isValid = false;
 		}
 

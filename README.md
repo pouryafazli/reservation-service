@@ -40,6 +40,12 @@ For building and running the application you need:
 ```shell
 mvn spring-boot:run
 ```
+# API Documentation
+Service used OpenAPI to generate API Documentation which is accessible at:
+
+```
+http://localhost:8080/swagger-ui.html
+```
 
 # How to Use
 
@@ -48,6 +54,11 @@ mvn spring-boot:run
 ```
 curl http://localhost:8080/reservations/available
 ```
+
+```
+'curl http://localhost:8080/reservations/available?startDate=2021-10-01&endDate=2021-10-20'
+```
+
 
 **Get Reservation By Id**
 
@@ -89,6 +100,23 @@ curl --location -g --request PUT 'http://localhost:8080/reservations/{id}' \
 curl --request DELETE 'http://localhost:8080/reservations/{id}'
 ```
 
+#Testing
+**Smoke Testing**
+To verifies the entire system from end to end is working you can run the SmokeTests. It will execute:
+- All the APIs. It will get the available dates, reserve the campsite, get the reservation by its id, update the reservation and at the end delete the same reservation 
+- Running 200 concurrent API calls to reserve the campsite for the same period. To make sure all calls issue at the same time system used CountDownLatch and ExecutorService.
+
+```shell
+mvn test -Dtest=SmokeTests
+```
+
+#Correlation ID
+A unique identifier value will attached to any requests which doesn't have x-correlation-id header that allow reference to a particular request or all request logs.
+
+```
+INFO 51734 --- [io-8080-exec-22] c.u.r.filter.CorrelationHeaderFilter     : No correlationId found in Header. Generated : a601cb1c-32a1-41e3-adaf-a7e7560dae8b
+```
+
 # Technology Stack
 
 ## Overview
@@ -104,5 +132,6 @@ curl --request DELETE 'http://localhost:8080/reservations/{id}'
 |Technology                |Description         |
 |---------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|
 |<a href="https://swagger.io/">Swagger</a>			|Open-Source software framework backed by a large ecosystem of tools that helps developers design, build, document, and consume RESTful Web services. |
-|<a href="https://projectlombok.org/">Lombok</a>		|Open-Source software framework backed by a large ecosystem of tools that helps developers design, build, document, and consume RESTful Web services. |
+|<a href="https://projectlombok.org/">Lombok</a>		|Project Lombok is a java library that automatically plugs into your editor and build tools, spicing up your java.
+Never write another getter or equals method again, with one annotation your class has a fully featured builder, Automate your logging variables, and much more. |
 |<a href="https://site.mockito.org/">Mockito</a>		|Mockito is a mocking framework for Java. Mockito allows convenient creation of substitutes of real objects for testing purposes.|

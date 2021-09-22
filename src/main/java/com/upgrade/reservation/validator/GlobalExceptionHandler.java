@@ -11,8 +11,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
+import com.upgrade.reservation.exception.DateIsNotAvailableException;
+import com.upgrade.reservation.exception.ReservationNotFoundException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
@@ -27,9 +31,27 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		// Get all errors
 		List<String> errors = ex.getBindingResult().getAllErrors().stream().map(x -> x.getDefaultMessage())
 				.collect(Collectors.toList());
-		
+
 		body.put("errors", errors);
 
+		return new ResponseEntity<>(body, status);
+	}
+
+	@ExceptionHandler(DateIsNotAvailableException.class)
+	ResponseEntity<Object> badRequestHandler(DateIsNotAvailableException e) {
+		return buildResponse(HttpStatus.BAD_REQUEST, e);
+	}
+
+	@ExceptionHandler(ReservationNotFoundException.class)
+	ResponseEntity<Object> badRequestHandler(ReservationNotFoundException e) {
+		return buildResponse(HttpStatus.NOT_FOUND, e);
+	}
+
+	private ResponseEntity<Object> buildResponse(HttpStatus status, RuntimeException exception) {
+		Map<String, Object> body = new LinkedHashMap<>();
+		body.put("timestamp", new Date());
+		body.put("status", status.value());
+		body.put("message", exception.getMessage());
 		return new ResponseEntity<>(body, status);
 	}
 }

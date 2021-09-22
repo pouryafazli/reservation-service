@@ -38,7 +38,7 @@ import com.upgrade.reservation.validator.ReservationValidator;
 
 @SpringBootTest(webEnvironment = WebEnvironment.DEFINED_PORT)
 @TestMethodOrder(OrderAnnotation.class)
-public class SanityTests {
+public class SmokeTests {
 
 	DateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
 
@@ -157,7 +157,7 @@ public class SanityTests {
 	public void concurrenctReservationRequests() throws JSONException, InterruptedException {
 		List<Object> responses = new ArrayList<>();
 		int numberOfThreads = 200;
-		ExecutorService service = Executors.newFixedThreadPool(10);
+		ExecutorService service = Executors.newFixedThreadPool(numberOfThreads);
 		CountDownLatch latch = new CountDownLatch(numberOfThreads);
 
 		JSONObject reservationJsonObject = new JSONObject();
@@ -185,7 +185,6 @@ public class SanityTests {
 			headers.setContentType(MediaType.APPLICATION_JSON);
 			HttpEntity<Object> entity = new HttpEntity<Object>(headers);
 			ResponseEntity<String> response = restTemplate.exchange((URI) r, HttpMethod.GET, entity, String.class);
-			System.out.println(response);
 		});
 		
 		assertThat(responses.size()).isEqualTo(1);

@@ -74,18 +74,18 @@ public class ReservationResource {
 	@GetMapping("/{id}")
 	public ResponseEntity<Reservation> getReservation(@PathVariable long id) {
 		try {
-			log.info("Start Get reservation request. [correlationId={}, reservationId{}]", RequestCorrelation.getId(),
+			log.info("Start Get reservation request. [correlationId={}, reservationId={}]", RequestCorrelation.getId(),
 					id);
 			Reservation reservation = reservationService.findById(id);
-			log.info("End Get reservation request. [correlationId={}, reservationId{}]", RequestCorrelation.getId(),
+			log.info("End Get reservation request. [correlationId={}, reservationId={}]", RequestCorrelation.getId(),
 					id);
 			return new ResponseEntity<>(reservation, HttpStatus.OK);
 		} catch (ReservationNotFoundException e) {
-			log.info("Cannot find the ereservation. [correlationId={}, reservationId{}]", RequestCorrelation.getId(),
+			log.info("Cannot find the ereservation. [correlationId={}, reservationId={}]", RequestCorrelation.getId(),
 					id);
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
 		} catch (Exception e) {
-			log.debug("Cannot complete the request. [correlationId={}, reservationId{}]", RequestCorrelation.getId(),
+			log.debug("Cannot complete the request. [correlationId={}, reservationId={}]", RequestCorrelation.getId(),
 					id);
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Request cannot complete", e);
 		}
@@ -106,7 +106,7 @@ public class ReservationResource {
 			log.info("End create reservation request. [correlationId={}]", RequestCorrelation.getId());
 			return response;
 		} catch (DateIsNotAvailableException e) {
-			log.debug("Requested dates are not available. [correlationId={}, startDate{}, enddate{}]",
+			log.debug("Requested dates are not available. [correlationId={}, startDate={}, enddate={}]",
 					RequestCorrelation.getId(), reservation.getStartDate(), reservation.getEndDate());
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Campsite is not available for rquested time", e);
 		} catch (Exception e) {
@@ -123,8 +123,10 @@ public class ReservationResource {
 	public ResponseEntity<Reservation> updateReservation(@PathVariable long id,
 			@Valid @RequestBody Reservation reservation) {
 		try {
+			log.info("Start update reservation request. [correlationId={}, reservationId={}]", RequestCorrelation.getId(),id);
 			reservation.setId(id);
 			Reservation newReservation = reservationService.update(reservation);
+			log.info("End update reservation request. [correlationId={}, reservationId={}]", RequestCorrelation.getId(),id);
 			return new ResponseEntity<>(newReservation, HttpStatus.CREATED);
 		} catch (ReservationNotFoundException e) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
